@@ -1,0 +1,29 @@
+.anime-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .anime-page img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .anime-page p {
+    margin-bottom: 10px;
+  }
+  
+  .anime-page button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .anime-page button:hover {
+    background-color: #45a049;
+  }
+  

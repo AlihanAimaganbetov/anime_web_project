@@ -2,57 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import { Link } from 'react-router-dom';
-
+import { addToFavorites, removeFromFavorites } from '../Favorites/favoritesActions';
 function App() {
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [selectedGenre, setSelectedGenre] = useState('');
     const genre = [
-        'Seinen',
-        'Comedy',
-        'Hentai',
-        'Slice of Life',
-        'Shounen',
-        'Shounen Ai',
-        'Shoujo',
-        'Game',
-        'Drama',
-        'Shoujo Ai',
-        'Kids',
-        'Demons',
-        'Space',
-        'Magic',
-        'Super Power',
-        'Psychological',
-        'Sci-Fi',
-        'Romance',
-        'Josei',
-        'Yuri',
-        'Ecchi',
-        'Mystery',
-        'Horror',
-        'Historical',
-        'Thriller',
-        'Cars',
-        'Military',
-        'Police',
-        'Dementia',
-        'Mecha',
-        'School',
-        'Martial Arts',
-        'Supernatural',
-        'Action',
-        'Harem',
-        'Music',
-        'Vampire',
-        'Samurai',
-        'Yaoi',
-        'Adventure',
-        'Fantasy',
-        'Parody',
-        'Sports'
+        'Seinen', 'Comedy', 'Hentai', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo',
+        'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power',
+        'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror',
+        'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School',
+        'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Yaoi',
+        'Adventure', 'Fantasy', 'Parody', 'Sports'
     ];
 
     useEffect(() => {
@@ -60,33 +23,28 @@ function App() {
             try {
                 const response = await axios.get('http://localhost:5000/api/Anime');
                 setItems(response.data);
-                setSearchResults(response.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
         fetchAnime();
     }, []);
-    const handleGenreChange = (e) => {
-        const selectedGenre = e.target.value;
-        console.log(selectedGenre)
-        if (selectedGenre === '') {
-            setSearchQuery(''); // Если выбрано "All Genres", сбрасываем фильтр
-        }
-        console.log(items[1].genre)
-
-
-    };
-
 
     useEffect(() => {
         const filteredResults = items.filter(
             item => item.title.toLowerCase().includes(searchQuery.toLowerCase())
         );
-        setSearchResults(filteredResults);
         setTotalPages(Math.ceil(filteredResults.length / 10));
         setCurrentPage(1);
     }, [searchQuery, items]);
+
+    useEffect(() => {
+        const filteredResults = items.filter(
+            item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true
+        );
+        setTotalPages(Math.ceil(filteredResults.length / 10));
+        setCurrentPage(1);
+    }, [selectedGenre, items]);
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
@@ -126,7 +84,7 @@ function App() {
                 onChange={e => setSearchQuery(e.target.value)}
             />
             <label htmlFor="genres">Select Genre:</label>
-            <select id="genres" onChange={handleGenreChange}>
+            <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
                 <option value="">All Genres</option>
                 {genre.map(genre => (
                     <option key={genre} value={genre}>
@@ -135,16 +93,20 @@ function App() {
                 ))}
             </select>
             <ul>
-                {searchResults.slice(startIndex, endIndex).map((item, index) => (
-                    <li key={item.id || index}>
-                        <div>
-                            <p>{item.title}</p>
-                            <Link to={`/anime/${item.uid}`}>
-                                <img src={item.img_url} alt={item.title} />
-                            </Link>
-                        </div>
-                    </li>
-                ))}
+                {items
+                    .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                    .filter(item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true)
+                    .slice(startIndex, endIndex)
+                    .map((item, index) => (
+                        <li key={item.id || index}>
+                            <div>
+                                <p>{item.title}</p>
+                                <Link to={`/anime/${item.uid}`}>
+                                    <img src={item.img_url} alt={item.title} />
+                                </Link>
+                            </div>
+                        </li>
+                    ))}
             </ul>
             <div className="pagination">
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>

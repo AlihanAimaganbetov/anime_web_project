@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom'; // Импорт Link из react-router-dom
+import './AnimePage.css';
 
 function AnimePage() {
     const { uid } = useParams();
     const [anime, setAnime] = useState(null);
-
 
     useEffect(() => {
         const fetchAnimeById = async () => {
@@ -20,14 +20,14 @@ function AnimePage() {
     }, [uid]);
 
     if (!anime) {
-        return <div>Loading...</div>;
+        return <div className="anime-page">Loading...</div>;
     }
 
     return (
-        <div>
-            <a href="/">
-            <button >Back</button>
-            </a>
+        <div className="anime-page">
+            <Link to="/">
+                <button>Back</button>
+            </Link>
             <p>Title: {anime.title}</p>
             <img src={anime.img_url} alt={anime.title}/>
             <p>Description: {anime.synopsis}</p>
@@ -35,8 +35,6 @@ function AnimePage() {
             <p>Aired: {anime.aired}</p>
             <p>Episodes: {anime.episodes}</p>
             <p>Popularity: {anime.popularity}</p>
-
-            {/* Другие свойства аниме */}
         </div>
     );
 }
