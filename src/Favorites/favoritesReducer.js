@@ -19,7 +19,7 @@ export const removeFromFavorites = (item) => ({
       case 'REMOVE_FROM_FAVORITES':
         return {
           ...state,
-          favorites: state.favorites.filter(item => item.id !== action.payload.id),
+          favorites: state.favorites.filter(item => item.uid !== action.payload.uid),
         };
       default:
         return state;
@@ -27,4 +27,4 @@ export const removeFromFavorites = (item) => ({
   };
   
   export default favoritesReducer;
-  
+      

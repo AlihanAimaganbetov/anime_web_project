@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import { Link } from 'react-router-dom';
-import { addToFavorites, removeFromFavorites } from '../Favorites/favoritesActions';
+import { addToFavorites } from '../Favorites/favoritesActions';
+import { useDispatch } from 'react-redux';
+
 function App() {
     const [items, setItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -17,7 +19,7 @@ function App() {
         'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Yaoi',
         'Adventure', 'Fantasy', 'Parody', 'Sports'
     ];
-
+    const dispatch = useDispatch();
     useEffect(() => {
         const fetchAnime = async () => {
             try {
@@ -38,6 +40,11 @@ function App() {
         setCurrentPage(1);
     }, [searchQuery, items]);
 
+    const addToFavoritesHandler = (item) => {
+
+        dispatch(addToFavorites(item));
+        alert("добавлено")
+    };
     useEffect(() => {
         const filteredResults = items.filter(
             item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true
@@ -75,7 +82,10 @@ function App() {
     }
 
     return (
-        <div className="container">
+        <div className="app-container">
+            <Link to="favorites">
+                <button>favorites</button>
+            </Link>
             <input
                 className="search-input"
                 type="text"
@@ -99,12 +109,19 @@ function App() {
                     .slice(startIndex, endIndex)
                     .map((item, index) => (
                         <li key={item.id || index}>
-                            <div>
-                                <p>{item.title}</p>
-                                <Link to={`/anime/${item.uid}`}>
-                                    <img src={item.img_url} alt={item.title} />
-                                </Link>
+
+                            <p>{item.title}</p>
+                            <div className='img-synopsis'>
+                                <div className='app-img'>
+                                    <Link to={`/anime/${item.uid}`}>
+                                        <img src={item.img_url} alt={item.title} />
+                                    </Link>
+                                </div>
+                                <div className='app-synopsis'>
+                                    {item.synopsis}
+                                </div>
                             </div>
+                            <button onClick={() => addToFavoritesHandler(item)}>Добавить в избранное</button>
                         </li>
                     ))}
             </ul>
