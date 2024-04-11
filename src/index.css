@@ -1,8 +1,14 @@
+@font-face {
+  font-family: 'Tilt Neon';
+  src: url('.\fonts\TiltNeon-Regular-VariableFont_XROT,YROT.ttf') format('ttf'),
+  /* Дополнительные параметры, если необходимо */
+}
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
+    font-family: 'Tilt Neon',sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
