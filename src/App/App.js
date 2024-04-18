@@ -67,14 +67,24 @@ function App() {
     const endIndex = currentPage * 10;
 
     const pageButtons = [];
-    for (let i = 1; i <= totalPages; i++) {
-        pageButtons.push(<button key={i} onClick={() => handlePageChange(i)} disabled={i === currentPage}>
-            {i}
-        </button>);
+    const maxButtonsToShow = 10; // Максимальное количество кнопок на пагинации
+
+    // Вычисляем начальную и конечную страницы для отображения
+    let startPage = Math.max(1, currentPage - Math.floor(maxButtonsToShow / 2));
+    let endPage = Math.min(totalPages, startPage + maxButtonsToShow - 1);
+    if (endPage === totalPages) {
+        startPage = Math.max(1, endPage - maxButtonsToShow + 1);
+    }
+    for (let i = startPage; i <= endPage; i++) {
+        pageButtons.push(
+            <button key={i} onClick={() => handlePageChange(i)} disabled={i === currentPage}>
+                {i}
+            </button>
+        );
     }
 
     return (<div className="app-container">
-        
+
         <Link to="favorites">
             <button>favorites</button>
         </Link>
@@ -110,7 +120,10 @@ function App() {
                             </Link>
                         </div>
                         <div className='app-synopsis'>
-                            {item.synopsis}
+                            <p><b>Description: </b> {item.synopsis}</p>
+                            <p><b>Score: </b> {item.score}</p>
+                            <p><b>Episodes: </b> {item.episodes}</p>
+                            <p><b>Genre: </b>{item.genre}</p>
                         </div>
                     </div>
                     <button onClick={() => addToFavoritesHandler(item)}>Добавить в избранное</button>
