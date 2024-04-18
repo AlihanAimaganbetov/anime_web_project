@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
-import {Link} from 'react-router-dom';
-import {addToFavorites} from '../Favorites/favoritesActions';
-import {useDispatch} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { addToFavorites } from '../Favorites/favoritesActions';
+import { useDispatch } from 'react-redux';
 
 function App() {
     const [items, setItems] = useState([]);
@@ -47,6 +47,11 @@ function App() {
             setCurrentPage(currentPage + 1);
         }
     };
+    const sortByScore = () => {
+        const sortedItems = [...items].sort((a, b) => b.score - a.score);
+        setItems(sortedItems);
+        setCurrentPage(1); // Сбрасываем текущую страницу при изменении порядка элементов
+    };
 
     const handlePrevPage = () => {
         if (currentPage > 1) {
@@ -69,54 +74,58 @@ function App() {
     }
 
     return (<div className="app-container">
-            <Link to="favorites">
-                <button>favorites</button>
-            </Link>
-            <input
-                className="search-input"
-                type="text"
-                placeholder="Search by title..."
-                value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
-            />
-            <label htmlFor="genres">Select Genre:</label>
-            <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
-                <option value="">All Genres</option>
-                {genre.map(genre => (<option key={genre} value={genre}>
-                        {genre}
-                    </option>))}
-            </select>
-            <ul>
-                {items
-                    .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
-                    .filter(item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true)
-                    .slice(startIndex, endIndex)
-                    .map((item, index) => (<li key={item.id || index}>
+        
+        <Link to="favorites">
+            <button>favorites</button>
+        </Link>
 
-                            <p>{item.title}</p>
-                            <div className='img-synopsis'>
-                                <div className='app-img'>
-                                    <Link to={`/anime/${item.uid}`}>
-                                        <img src={item.img_url} alt={item.title}/>
-                                    </Link>
-                                </div>
-                                <div className='app-synopsis'>
-                                    {item.synopsis}
-                                </div>
-                            </div>
-                            <button onClick={() => addToFavoritesHandler(item)}>Добавить в избранное</button>
-                        </li>))}
-            </ul>
-            <div className="pagination">
-                <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    Previous Page
-                </button>
-                {pageButtons}
-                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    Next Page
-                </button>
-            </div>
-        </div>);
+
+        <input
+            className="search-input"
+            type="text"
+            placeholder="Search by title..."
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+        />
+        <button onClick={sortByScore}>Sort by Score</button>
+        <label htmlFor="genres">Select Genre:</label>
+        <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
+            <option value="">All Genres</option>
+            {genre.map(genre => (<option key={genre} value={genre}>
+                {genre}
+            </option>))}
+        </select>
+        <ul>
+            {items
+                .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                .filter(item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true)
+                .slice(startIndex, endIndex)
+                .map((item, index) => (<li key={item.id || index}>
+
+                    <p>{item.title}</p>
+                    <div className='img-synopsis'>
+                        <div className='app-img'>
+                            <Link to={`/anime/${item.uid}`}>
+                                <img src={item.img_url} alt={item.title} />
+                            </Link>
+                        </div>
+                        <div className='app-synopsis'>
+                            {item.synopsis}
+                        </div>
+                    </div>
+                    <button onClick={() => addToFavoritesHandler(item)}>Добавить в избранное</button>
+                </li>))}
+        </ul>
+        <div className="pagination">
+            <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                Previous Page
+            </button>
+            {pageButtons}
+            <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                Next Page
+            </button>
+        </div>
+    </div>);
 }
 
 export default App;

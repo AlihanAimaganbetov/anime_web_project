@@ -19,7 +19,7 @@ app.use(cors()); // Добавьте эту строку
 app.get('/api/Anime', async (req, res) => {
     try {
         const client = await pool.connect();
-        const result = await client.query('SELECT * FROM anime_data');
+        const result = await client.query('select Distinct * from anime_data;');
         res.json(result.rows);
         client.release();
     } catch (err) {
