@@ -4,13 +4,8 @@ const AnimeReview = ({ review }) => {
     return (
         <div className="anime-review">
             <h2>Review by {review.profile}</h2>
-            <p>{review.text}</p>
+            <p style={{ whiteSpace: 'pre-line' }}>{review.text}</p>
             <p>Overall Score: {review.score}</p>
-            <ul>
-                {Object.entries(review.scores).map(([aspect, score]) => (
-                    <li key={aspect}>{aspect}: {score}</li>
-                ))}
-            </ul>
             <a href={review.link} target="_blank" rel="noopener noreferrer">Read more</a>
         </div>
     );

@@ -55,7 +55,7 @@ function AnimePage() {
                 <h2>Reviews</h2>
                 {reviews.length > 0 ? (
                     reviews.map(review => (
-                        <AnimeReview key={review.review_id} review={review} />
+                        <AnimeReview key={review.uid} review={review} />
                     ))
                 ) : (
                     <p>No reviews available</p>

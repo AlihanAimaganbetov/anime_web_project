@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import './App.css';
-import { Link } from 'react-router-dom';
-import { addToFavorites } from '../Favorites/favoritesActions';
-import { useDispatch } from 'react-redux';
+import {Link} from 'react-router-dom';
+import {addToFavorites} from '../Favorites/favoritesActions';
+import {useDispatch} from 'react-redux';
 
 function App() {
     const [items, setItems] = useState([]);
@@ -11,14 +11,7 @@ function App() {
     const [totalPages, setTotalPages] = useState(1);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedGenre, setSelectedGenre] = useState('');
-    const genre = [
-        'Seinen', 'Comedy', 'Hentai', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo',
-        'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power',
-        'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror',
-        'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School',
-        'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Yaoi',
-        'Adventure', 'Fantasy', 'Parody', 'Sports'
-    ];
+    const genre = ['Seinen', 'Comedy', 'Hentai', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo', 'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power', 'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror', 'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School', 'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Yaoi', 'Adventure', 'Fantasy', 'Parody', 'Sports'];
     const dispatch = useDispatch();
     useEffect(() => {
         const fetchAnime = async () => {
@@ -33,9 +26,7 @@ function App() {
     }, []);
 
     useEffect(() => {
-        const filteredResults = items.filter(
-            item => item.title.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        const filteredResults = items.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
         setTotalPages(Math.ceil(filteredResults.length / 10));
         setCurrentPage(1);
     }, [searchQuery, items]);
@@ -46,9 +37,7 @@ function App() {
         alert("добавлено")
     };
     useEffect(() => {
-        const filteredResults = items.filter(
-            item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true
-        );
+        const filteredResults = items.filter(item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true);
         setTotalPages(Math.ceil(filteredResults.length / 10));
         setCurrentPage(1);
     }, [selectedGenre, items]);
@@ -74,15 +63,12 @@ function App() {
 
     const pageButtons = [];
     for (let i = 1; i <= totalPages; i++) {
-        pageButtons.push(
-            <button key={i} onClick={() => handlePageChange(i)} disabled={i === currentPage}>
-                {i}
-            </button>
-        );
+        pageButtons.push(<button key={i} onClick={() => handlePageChange(i)} disabled={i === currentPage}>
+            {i}
+        </button>);
     }
 
-    return (
-        <div className="app-container">
+    return (<div className="app-container">
             <Link to="favorites">
                 <button>favorites</button>
             </Link>
@@ -96,25 +82,22 @@ function App() {
             <label htmlFor="genres">Select Genre:</label>
             <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
                 <option value="">All Genres</option>
-                {genre.map(genre => (
-                    <option key={genre} value={genre}>
+                {genre.map(genre => (<option key={genre} value={genre}>
                         {genre}
-                    </option>
-                ))}
+                    </option>))}
             </select>
             <ul>
                 {items
                     .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
                     .filter(item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true)
                     .slice(startIndex, endIndex)
-                    .map((item, index) => (
-                        <li key={item.id || index}>
+                    .map((item, index) => (<li key={item.id || index}>
 
                             <p>{item.title}</p>
                             <div className='img-synopsis'>
                                 <div className='app-img'>
                                     <Link to={`/anime/${item.uid}`}>
-                                        <img src={item.img_url} alt={item.title} />
+                                        <img src={item.img_url} alt={item.title}/>
                                     </Link>
                                 </div>
                                 <div className='app-synopsis'>
@@ -122,8 +105,7 @@ function App() {
                                 </div>
                             </div>
                             <button onClick={() => addToFavoritesHandler(item)}>Добавить в избранное</button>
-                        </li>
-                    ))}
+                        </li>))}
             </ul>
             <div className="pagination">
                 <button onClick={handlePrevPage} disabled={currentPage === 1}>
@@ -134,8 +116,7 @@ function App() {
                     Next Page
                 </button>
             </div>
-        </div>
-    );
+        </div>);
 }
 
 export default App;
