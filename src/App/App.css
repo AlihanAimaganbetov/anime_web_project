@@ -1,26 +1,85 @@
+/* Общие стили */
+
+body {
+  
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f7f7f7; /* Добавим светлый фон */
+}
+
+.app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff; /* Цвет фона вашего заголовка */
+  padding: 10px 20px; /* Отступы внутри заголовка */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Тень под заголовком */
+  z-index: 1000; /* Устанавливаем z-index для обеспечения отображения над остальным содержимым */
+}
+
+.app-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header .container input,
+.app-header .container button,
+.app-header .container select {
+  margin-right: 10px; /* Отступ между элементами */
+}
+
 .app-container {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 20px auto; /* Центрирование блока и небольшой отступ сверху и снизу */
   padding: 20px;
+  background-color: #fff; /* Белый фон контейнера */
+  border-radius: 10px; /* Закругление углов контейнера */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Тень контейнера */
 }
+
+/* Стили для поискового инпута */
 
 .search-input {
   margin-bottom: 10px;
-  padding: 5px;
+  padding: 10px;
   font-size: 16px;
+  width: 100%;
+  border: 1px solid #ccc; /* Граница инпута */
+  border-radius: 5px; /* Закругление углов инпута */
 }
+
+/* Стили для лейблов и селектора жанров */
 
 label {
   margin-right: 10px;
 }
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc; /* Граница селектора */
+  border-radius: 5px; /* Закругление углов селектора */
+}
+
+/* Стили для списка аниме */
 
 ul {
   list-style: none;
   padding: 0;
 }
 
-li {
+.anime {
+  border: 2px solid #a7a7a7;
+  border-radius: 10px; /* Закругление углов контейнера аниме */
   margin-bottom: 20px;
+  padding: 10px;
+} 
+
+.anime p {
+  margin: 0; /* Убираем отступы у абзацев */
 }
 
 .img-synopsis {
@@ -28,51 +87,44 @@ li {
   align-items: center;
 }
 
-.app-anime-container p {
-  flex: 1;
-  margin-right: 10px;
+.app-img img {
+  width: 200px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 5px; /* Закругление углов изображений */
 }
 
 .app-synopsis {
-  flex: 3;
+  flex: 1;
 }
 
-.img-synopsis img {
-  width: 200px;
-  height: auto;
-  margin-right: 10px;
-}
+/* Стили для кнопок и пагинации */
 
-.pagination {
-  margin-top: 20px;
-}
-
-.pagination button {
-  margin-right: 5px;
-  padding: 5px 10px;
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
   background-color: #007bff;
   color: #fff;
   border: none;
+  border-radius: 5px; /* Закругление углов кнопок */
   cursor: pointer;
+  transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
 }
 
-.pagination button:disabled {
+.button:hover {
+  background-color: #0056b3;
+}
+
+.button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
 }
 
-button {
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+.pagination {
+  margin-top: 20px;
+  text-align: center; /* Выравнивание по центру */
 }
 
-button:hover {
-  background-color: #0056b3;
-}
-
-button:focus {
-  outline: none;
+.pagination button {
+  margin: 0 5px;
 }

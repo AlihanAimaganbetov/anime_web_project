@@ -79,56 +79,67 @@ function App() {
         pageButtons.push(
             <button key={i} onClick={() => handlePageChange(i)} disabled={i === currentPage}>
                 {i}
-            </button>
+            </button>   
         );
     }
 
     return (<div className="app-container">
 
-        <Link to="favorites">
-            <button>favorites</button>
-        </Link>
+        <header className="app-header">
+            <div className="container">
+                <Link to="favorites">
+                    <button>favorites</button>
+                </Link>
 
+                <input
+                    className="search-input"
+                    type="text"
+                    placeholder="Search by title..."
+                    value={searchQuery}
+                    onChange={e => setSearchQuery(e.target.value)}
+                />
 
-        <input
-            className="search-input"
-            type="text"
-            placeholder="Search by title..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-        />
-        <button onClick={sortByScore}>Sort by Score</button>
-        <label htmlFor="genres">Select Genre:</label>
-        <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
-            <option value="">All Genres</option>
-            {genre.map(genre => (<option key={genre} value={genre}>
-                {genre}
-            </option>))}
-        </select>
+                <button onClick={sortByScore}>Sort by Score</button>
+
+                <label htmlFor="genres">Select Genre:</label>
+                <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
+                    <option value="">All Genres</option>
+                    {genre.map(genre => (
+                        <option key={genre} value={genre}>
+                            {genre}
+                        </option>
+                    ))}
+                </select>
+            </div>
+        </header>
+
         <ul>
             {items
                 .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))
                 .filter(item => selectedGenre ? item.genre.toLowerCase().includes(selectedGenre.toLowerCase()) : true)
                 .slice(startIndex, endIndex)
                 .map((item, index) => (<li key={item.id || index}>
-
-                    <p>{item.title}</p>
-                    <div className='img-synopsis'>
-                        <div className='app-img'>
-                            <Link to={`/anime/${item.uid}`}>
-                                <img src={item.img_url} alt={item.title} />
-                            </Link>
-                        </div>
-                        <div className='app-synopsis'>
-                            <p><b>Description: </b> {item.synopsis}</p>
-                            <p><b>Score: </b> {item.score}</p>
-                            <p><b>Episodes: </b> {item.episodes}</p>
-                            <p><b>Genre: </b>{item.genre}</p>
+                    <div className='anime'>
+                        <p>{item.title}</p>
+                        <div className='img-synopsis'>
+                            <div className='app-img'>
+                                <Link to={`/anime/${item.uid}`}>
+                                    <img src={item.img_url} alt={item.title} />
+                                </Link>
+                            </div>
+                            <div className='app-synopsis'>
+                                <p><b>Description: </b> {item.synopsis}</p>
+                                <p><b>Score: </b> {item.score}</p>
+                                <p><b>Episodes: </b> {item.episodes}</p>
+                                <p><b>Genre: </b>{item.genre}</p>
+                            </div>
                         </div>
                     </div>
                     <button onClick={() => addToFavoritesHandler(item)}>Добавить в избранное</button>
                 </li>))}
+
         </ul>
+
         <div className="pagination">
             <button onClick={handlePrevPage} disabled={currentPage === 1}>
                 Previous Page

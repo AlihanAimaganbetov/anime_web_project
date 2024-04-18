@@ -1,29 +1,64 @@
 .anime-page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .anime-page img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 20px;
-  }
-  
-  .anime-page p {
-    margin-bottom: 10px;
-  }
-  
-  .anime-page button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .anime-page button:hover {
-    background-color: #45a049;
-  }
-  
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.anime-page p {
+  margin-bottom: 10px;
+}
+
+.anime-page img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.anime-reviews {
+  margin-top: 20px;
+}
+
+.anime-reviews h2 {
+  margin-bottom: 10px;
+}
+
+.anime-review {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.anime-review p {
+  margin: 0;
+}
+
+.anime-review .review-content {
+  margin-top: 10px;
+}
+
+.anime-review .review-author {
+  font-weight: bold;
+}
+
+.anime-page button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.anime-page button:hover {
+  background-color: #0056b3;
+}
+
+.anime-page button:focus {
+  outline: none;
+}
