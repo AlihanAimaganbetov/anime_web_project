@@ -46,6 +46,38 @@ app.get('/api/Anime/:id', async (req, res) => {
     }
 });
 
+
+app.get('/api/reviews/:anime_uid', async (req, res) => {
+    const anime_uid = req.params.anime_uid;
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM reviews_data WHERE anime_uid = $1', [anime_uid]);
+        if (result.rows.length === 0) {
+            res.status(404).json({ message: 'Anime not found' });
+        } else {
+            res.json(result.rows);
+        }
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
+
+
+app.get('/api/reviews', async (req, res) => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query('SELECT * FROM reviews_data');
+        res.json(result.rows);
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server Error' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
