@@ -28,15 +28,13 @@ app.get('/api/Anime', async (req, res) => {
     }
 });
 app.get('/api/Anime/:id', async (req, res) => {
-    const animeId = req.params.id; // Получение идентификатора аниме из URL
+    const animeId = req.params.id;
     try {
         const client = await pool.connect();
         const result = await client.query('SELECT * FROM anime_data WHERE uid = $1', [animeId]);
         if (result.rows.length === 0) {
-            // Если аниме с указанным идентификатором не найдено, возвращаем ошибку 404
             res.status(404).json({ message: 'Anime not found' });
         } else {
-            // Если аниме найдено, возвращаем информацию об аниме
             res.json(result.rows[0]);
         }
         client.release();

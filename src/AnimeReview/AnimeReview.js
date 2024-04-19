@@ -13,7 +13,7 @@ const AnimeReview = ({ review }) => {
             <p>{expanded ? review.text : review.text.slice(0, 700) + '...'}</p>
             {review.text.length > 700 && (
                 <button onClick={toggleExpand}>
-                    {expanded ? 'Скрыть' : 'Раскрыть'}
+                    {expanded ? 'Hide' : 'More'}
                 </button>
             )}
             <p>Overall Score: {review.score}</p>
