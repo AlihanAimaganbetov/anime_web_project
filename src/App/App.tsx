@@ -14,19 +14,16 @@ interface Anime {
     synopsis:string;
     aired: string;
     episodes : number;
-    // Добавьте другие поля, если они есть в вашем объекте Anime
 }
 
 const App: React.FC<{}> = () => {
-
     const [items, setItems] = useState<Anime[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [selectedGenre, setSelectedGenre] = useState<string>('');
-    const genre: string[] = ['Seinen', 'Comedy', 'Hentai', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo', 'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power', 'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror', 'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School', 'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Yaoi', 'Adventure', 'Fantasy', 'Parody', 'Sports'];
+    const genre: string[] = ['Seinen', 'Comedy', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo', 'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power', 'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror', 'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School', 'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Yaoi', 'Adventure', 'Fantasy', 'Parody', 'Sports'];
     const dispatch = useDispatch();
-
     useEffect(() => {
         const fetchAnime = async () => {
             try {
@@ -38,7 +35,28 @@ const App: React.FC<{}> = () => {
         };
         fetchAnime();
     }, []);
-
+    const extractYear = (aired: string): number => {
+        // Разбиваем строку на компоненты даты
+        const dateComponents = aired.split(", ");
+        // Получаем последний компонент, содержащий год
+        const yearString = dateComponents[dateComponents.length - 1];
+        // Преобразуем строку с годом в числовое значение
+        const year = parseInt(yearString);
+        // Возвращаем год
+        return year;
+    };
+    
+    const sortByAired = () => {
+        const sortedItems = [...items].sort((a, b) => {
+            const yearA = extractYear(a.aired);
+            const yearB = extractYear(b.aired);
+            // Сравниваем года выпуска
+            return yearB - yearA;
+        });
+        setItems(sortedItems);
+        setCurrentPage(1); 
+    };
+    
     useEffect(() => {
         const filteredResults = items.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
         setTotalPages(Math.ceil(filteredResults.length / 10));
@@ -65,7 +83,7 @@ const App: React.FC<{}> = () => {
     const sortByScore = () => {
         const sortedItems = [...items].sort((a, b) => b.score - a.score);
         setItems(sortedItems);
-        setCurrentPage(1); // Сбрасываем текущую страницу при изменении порядка элементов
+        setCurrentPage(1); 
     };
 
     const handlePrevPage = () => {
@@ -82,9 +100,9 @@ const App: React.FC<{}> = () => {
     const endIndex = currentPage * 10;
 
     const pageButtons: JSX.Element[] = [];
-    const maxButtonsToShow: number = 10; // Максимальное количество кнопок на пагинации
+    const maxButtonsToShow: number = 10; 
 
-    // Вычисляем начальную и конечную страницы для отображения
+    
     let startPage = Math.max(1, currentPage - Math.floor(maxButtonsToShow / 2));
     let endPage = Math.min(totalPages, startPage + maxButtonsToShow - 1);
     if (endPage === totalPages) {
@@ -112,6 +130,7 @@ const App: React.FC<{}> = () => {
             onChange={e => setSearchQuery(e.target.value)}
         />
         <button onClick={sortByScore}>Sort by Score</button>
+        <button onClick={sortByAired}>Sort by Aired</button>
         <label htmlFor="genres">Select Genre:</label>
         <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
             <option value="">All Genres</option>
@@ -161,8 +180,4 @@ const App: React.FC<{}> = () => {
     </div>
 </div>);
 }
-// Возвращаем JSX или null
-
-
-
 export default App;

@@ -14,12 +14,12 @@ const pool = new Pool({
 });
 
 app.use(express.json());
-app.use(cors()); // Добавьте эту строку
+app.use(cors()); 
 
 app.get('/api/Anime', async (req, res) => {
     try {
         const client = await pool.connect();
-        const result = await client.query('select Distinct * from anime_data;');
+        const result = await client.query("select Distinct * from anime_data WHERE genre NOT LIKE '%Hentai%'");
         res.json(result.rows);
         client.release();
     } catch (err) {
