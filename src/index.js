@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App/App';
+import App from './App/App.tsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AnimePage from "./AnimePage/AnimePage";
 import store from './redux/store';
