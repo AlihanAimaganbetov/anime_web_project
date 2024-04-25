@@ -24,6 +24,7 @@ function App() {
         };
         fetchAnime();
     }, []);
+    
 
     useEffect(() => {
         const filteredResults = items.filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -85,7 +86,7 @@ function App() {
     return (<div className="app-container">
         <header className="app-header">
             <Link to="favorites">
-                <button>favorites</button>
+                <button>Favorites</button>
             </Link>
             <input
                 className="search-input"
@@ -124,6 +125,7 @@ function App() {
                                 <p><b>Score: </b> {item.score}</p>
                                 <p><b>Episodes: </b> {item.episodes}</p>
                                 <p><b>Genre: </b>{item.genre}</p>
+                                <p><b>Aired: </b>{item.aired}</p>
                             </div>
                         </div>
                     </div>
