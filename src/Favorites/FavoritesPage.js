@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromFavorites } from './favoritesReducer';
+import { removeFromFavorites } from '../redux/reducers';
 import { Link } from 'react-router-dom';
 
 

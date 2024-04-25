@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import { Link } from 'react-router-dom';
-import { addToFavorites } from '../Favorites/favoritesActions';
+import { addToFavorites } from '../redux/action';
 import { useDispatch } from 'react-redux';
 
 function App() {
@@ -32,7 +32,6 @@ function App() {
     }, [searchQuery, items]);
 
     const addToFavoritesHandler = (item) => {
-
         dispatch(addToFavorites(item));
         alert("добавлено")
     };
@@ -79,40 +78,33 @@ function App() {
         pageButtons.push(
             <button key={i} onClick={() => handlePageChange(i)} disabled={i === currentPage}>
                 {i}
-            </button>   
+            </button>
         );
     }
 
     return (<div className="app-container">
-
         <header className="app-header">
-            <div className="container">
-                <Link to="favorites">
-                    <button>favorites</button>
-                </Link>
-
-                <input
-                    className="search-input"
-                    type="text"
-                    placeholder="Search by title..."
-                    value={searchQuery}
-                    onChange={e => setSearchQuery(e.target.value)}
-                />
-
-                <button onClick={sortByScore}>Sort by Score</button>
-
-                <label htmlFor="genres">Select Genre:</label>
-                <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
-                    <option value="">All Genres</option>
-                    {genre.map(genre => (
-                        <option key={genre} value={genre}>
-                            {genre}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <Link to="favorites">
+                <button>favorites</button>
+            </Link>
+            <input
+                className="search-input"
+                type="text"
+                placeholder="Search by title..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+            />
+            <button onClick={sortByScore}>Sort by Score</button>
+            <label htmlFor="genres">Select Genre:</label>
+            <select id="genres" onChange={e => setSelectedGenre(e.target.value)}>
+                <option value="">All Genres</option>
+                {genre.map(genre => (
+                    <option key={genre} value={genre}>
+                        {genre}
+                    </option>
+                ))}
+            </select>
         </header>
-
         <ul>
             {items
                 .filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()))

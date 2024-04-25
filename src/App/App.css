@@ -1,7 +1,6 @@
 /* Общие стили */
 
 body {
-  
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,25 +8,25 @@ body {
 }
 
 .app-header {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  background-color: #fff; /* Цвет фона вашего заголовка */
-  padding: 10px 20px; /* Отступы внутри заголовка */
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Тень под заголовком */
-  z-index: 1000; /* Устанавливаем z-index для обеспечения отображения над остальным содержимым */
+  background-color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-.app-header .container {
+/* Остальные стили остаются неизменными */
+
+
+.app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.app-header .container input,
-.app-header .container button,
-.app-header .container select {
+.app-header  input,
+.app-header  button,
+.app-header select {
   margin-right: 10px; /* Отступ между элементами */
 }
 

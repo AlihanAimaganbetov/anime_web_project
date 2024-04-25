@@ -1,7 +1,7 @@
 // store/index.js
 import { createStore } from 'redux';
-import favoritesReducer from '../Favorites/favoritesReducer';
+import reducers from './reducers';
 
-const store = createStore(favoritesReducer);
+const store = createStore(reducers);
 
 export default store;
