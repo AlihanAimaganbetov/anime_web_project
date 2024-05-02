@@ -17,7 +17,9 @@ function FavoritesPage() {
     return (
         <div className='app-container'>
             <Link to="/">
+                <div className='back'>
                 <button>Back</button>
+                </div>
             </Link>
             <h1>Favorites</h1>
             {favorites.length === 0 ? (

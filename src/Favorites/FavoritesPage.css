@@ -165,7 +165,7 @@ body {
   
   /* Стили для кнопок и пагинации */
   
-  .button {
+  .back button {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #007bff;
@@ -176,11 +176,11 @@ body {
     transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
   }
   
-  .button:hover {
+  .back button:hover {
     background-color: #0056b3;
   }
   
-  .button:disabled {
+  .back button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
