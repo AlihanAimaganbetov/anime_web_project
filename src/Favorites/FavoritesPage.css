@@ -1,0 +1,215 @@
+/* Общие стили */
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f7f7f7; /* Добавим светлый фон */
+  }
+  
+  .app-header {
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  /* Остальные стили остаются неизменными */
+  
+  
+  .app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 20px ;
+    max-width: calc(100% - 40px);
+  }
+  
+  .app-header  input,
+  .app-header  button,
+  .app-header select {
+    margin-right: 10px; /* Отступ между элементами */
+  }
+  .app-header button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px; /* Закругление углов кнопок */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
+  }
+  
+  .app-header button:hover {
+    background-color: #0056b3;
+  }
+  
+  .app-header button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .app-container {
+    max-width: 800px;
+    margin: 20px auto; /* Центрирование блока и небольшой отступ сверху и снизу */
+    padding: 40px;
+    background-color: #fff; /* Белый фон контейнера */
+    border-radius: 10px; /* Закругление углов контейнера */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Тень контейнера */
+  }
+  
+  /* Стили для поискового инпута */
+  
+  .search-input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    border: 1px solid #ccc; /* Граница инпута */
+    border-radius: 5px; /* Закругление углов инпута */
+  }
+  
+  /* Стили для лейблов и селектора жанров */
+  
+  label {
+    margin-right: 10px;
+  }
+  
+  select {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc; /* Граница селектора */
+    border-radius: 5px; /* Закругление углов селектора */
+  }
+  
+  /* Стили для списка аниме */
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .anime {
+    border: 2px solid #a7a7a7;
+    border-radius: 10px; /* Закругление углов контейнера аниме */
+    margin-bottom: 20px;
+    padding: 10px;
+  } 
+  
+  .anime p {
+    margin: 0; /* Убираем отступы у абзацев */
+  }
+  
+  .img-synopsis {
+    display: flex;
+    align-items: center;
+  }
+  
+  .app-img img {
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 5px; /* Закругление углов изображений */
+  }
+  
+  .app-synopsis {
+    flex: 1;
+  }
+  .anime {
+    border: 2px solid #a7a7a7;
+    border-radius: 10px; /* Закругление углов контейнера аниме */
+    margin-bottom: 20px;
+    padding: 10px;
+  } 
+  
+  .anime p {
+    margin: 0; /* Убираем отступы у абзацев */
+  }
+  
+  .img-synopsis {
+    display: flex;
+    align-items: center;
+  }
+  
+  .app-img img {
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 5px; /* Закругление углов изображений */
+  }
+  
+  .app-synopsis {
+    flex: 1;
+  }
+  .addToFavorites button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px; /* Закругление углов кнопок */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
+  }
+  
+  .addToFavorites button:hover {
+    background-color: #0056b3;
+  }
+  
+  .addToFavorites button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* Стили для кнопок и пагинации */
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px; /* Закругление углов кнопок */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  
+  .button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination {
+    margin-top: 20px;
+    text-align: center; /* Выравнивание по центру */
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+  }
+  .pagination button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px; /* Закругление углов кнопок */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Плавное изменение цвета фона при наведении */
+  }
+  
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

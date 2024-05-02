@@ -4,7 +4,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromFavorites } from '../redux/reducers';
 import { Link } from 'react-router-dom';
-
+import './FavoritesPage.css'
 
 function FavoritesPage() {
     const favorites = useSelector(state => state.favorites);
@@ -15,7 +15,7 @@ function FavoritesPage() {
     };
 
     return (
-        <div>
+        <div className='app-container'>
             <Link to="/">
                 <button>Back</button>
             </Link>
@@ -26,11 +26,20 @@ function FavoritesPage() {
                 <ul>
                     {favorites.map(item => (
                         <li key={item.uid}>
-                            <div>
+                            <div className='anime'>
                                 <p>{item.title}</p>
-                                <img src={item.img_url} alt={item.title} />
-                                {item.synopsis}
+                                <div className='img-synopsis'>
+
+                                    <div className='app-img'>
+                                        <img src={item.img_url} alt={item.title} />
+                                    </div>
+                                    <div className='app-synopsis'>{item.synopsis}</div>
+
+
+                                </div>
+                                <div className='addToFavorites'>
                                 <button onClick={() => handleRemoveFromFavorites(item)}>Remove from Favorites</button>
+                                </div>
                             </div>
                         </li>
                     ))}

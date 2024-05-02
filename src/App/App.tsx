@@ -21,7 +21,7 @@ const App: React.FC<{}> = () => {
     const [totalPages, setTotalPages] = useState<number>(1);
     const [searchQuery, setSearchQuery] = useState<string>('');
     const [selectedGenre, setSelectedGenre] = useState<string>('');
-    const genre: string[] = ['Seinen', 'Comedy', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo', 'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power', 'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror', 'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School', 'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Yaoi', 'Adventure', 'Fantasy', 'Parody', 'Sports'];
+    const genre: string[] = ['Seinen', 'Comedy', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo', 'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power', 'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror', 'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School', 'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Adventure', 'Fantasy', 'Parody', 'Sports'];
     const dispatch = useDispatch();
     useEffect(() => {
         const fetchAnime = async () => {
@@ -160,8 +160,12 @@ const App: React.FC<{}> = () => {
                                 <p><b>Aired: </b>{item.aired}</p>
                             </div>
                         </div>
+                        <div className='addToFavorites'>
+                            <button onClick={() => addToFavoritesHandler(item)}>Add to Favorite</button>
+                        </div>
                     </div>
-                    <button onClick={() => addToFavoritesHandler(item)}>Добавить в избранное</button>
+
+
                 </li>))}
 
         </ul>
