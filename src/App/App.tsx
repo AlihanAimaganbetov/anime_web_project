@@ -181,4 +181,4 @@ const App: React.FC<{}> = () => {
         </div>
     </div>);
 }
-export default App;
+export default App
