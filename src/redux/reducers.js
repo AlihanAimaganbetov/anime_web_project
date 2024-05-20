@@ -1,4 +1,5 @@
-// favoritesReducer.js
+import { combineReducers } from 'redux';
+import { authReducer } from './authReducer';
 
 export const removeFromFavorites = (item) => ({
   type: 'REMOVE_FROM_FAVORITES',
@@ -9,7 +10,7 @@ const initialState = {
   favorites: [],
 };
 
-const reducers = (state = initialState, action) => {
+const favoritesReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_TO_FAVORITES':
       return {
@@ -26,5 +27,11 @@ const reducers = (state = initialState, action) => {
   }
 };
 
-export default reducers;
+
+const reducers = combineReducers({
+  auth: authReducer,
+  favorites: favoritesReducer,
+});
+
+export default reducers ;
     
