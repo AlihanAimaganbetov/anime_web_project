@@ -8,6 +8,8 @@ import FavoritesPage from './Favorites/FavoritesPage';
 import { Provider } from 'react-redux';
 import "./index.css"
 import SimplePage from './page.tsx'
+import Register from './Auth/Register';
+import Login from './Auth/Auth';
 
 createRoot(document.getElementById('root')).render(
     <div>
@@ -23,6 +25,8 @@ createRoot(document.getElementById('root')).render(
                         <Route exact path="/" element={<App />} />
                         <Route path="/anime/:uid" element={<AnimePage />} />
                         <Route path='/favorites' element={<FavoritesPage />}></Route>
+                        <Route path="/register" component={Register} />
+                        <Route path="/login" component={Login} />
                     </Routes>
                 </Router>
             </React.StrictMode>
