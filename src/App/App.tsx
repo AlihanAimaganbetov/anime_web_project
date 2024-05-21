@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { addToFavorites } from '../redux/action';
-import { Link } from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {addToFavorites} from '../redux/action';
+import {Link} from 'react-router-dom';
 import './App.css'
+import { logout } from '../redux/authActions';
 
 interface Anime {
     title: string;
@@ -15,6 +16,7 @@ interface Anime {
     aired: string;
     episodes: number;
 }
+
 const App: React.FC<{}> = () => {
     const [items, setItems] = useState<Anime[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -23,6 +25,19 @@ const App: React.FC<{}> = () => {
     const [selectedGenre, setSelectedGenre] = useState<string>('');
     const genre: string[] = ['Seinen', 'Comedy', 'Slice of Life', 'Shounen', 'Shounen Ai', 'Shoujo', 'Game', 'Drama', 'Shoujo Ai', 'Kids', 'Demons', 'Space', 'Magic', 'Super Power', 'Psychological', 'Sci-Fi', 'Romance', 'Josei', 'Yuri', 'Ecchi', 'Mystery', 'Horror', 'Historical', 'Thriller', 'Cars', 'Military', 'Police', 'Dementia', 'Mecha', 'School', 'Martial Arts', 'Supernatural', 'Action', 'Harem', 'Music', 'Vampire', 'Samurai', 'Adventure', 'Fantasy', 'Parody', 'Sports'];
     const dispatch = useDispatch();
+    // @ts-ignore
+    const authState = useSelector(state => state.auth);
+    const handleLogout = () => {
+        // @ts-ignore
+        dispatch(logout());
+        window.location.reload();
+    };
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            dispatch({ type: 'LOGIN_SUCCESS', payload: token });
+        }
+    }, [dispatch]);
     useEffect(() => {
         const fetchAnime = async () => {
             try {
@@ -34,6 +49,7 @@ const App: React.FC<{}> = () => {
         };
         fetchAnime();
     }, []);
+
     const extractYear = (aired: string): number => {
         // Разбиваем строку на компоненты даты
         const dateComponents = aired.split(", ");
@@ -111,10 +127,27 @@ const App: React.FC<{}> = () => {
             <button key={i} onClick={() => handlePageChange(i)} disabled={i === currentPage}>
                 {i}
             </button>
-
         );
     }
     return (<div className="app-container">
+        <div>
+            {authState.user ? (
+                <div>
+                    <h2>Welcome! You are logged in.</h2>
+                    <button onClick={handleLogout}>Logout</button>
+                </div>
+            ) : (
+                <div>
+                    <h2>You are not logged in.</h2>
+                </div>
+            )}
+        </div>
+        <Link to="login">
+            <button>login</button>
+        </Link>
+        <Link to="register">
+            <button>register</button>
+        </Link>
         <header className="app-header">
             <Link to="favorites">
                 <button>Favorites</button>
@@ -149,7 +182,7 @@ const App: React.FC<{}> = () => {
                         <div className='img-synopsis'>
                             <div className='app-img'>
                                 <Link to={`/anime/${item.uid}`}>
-                                    <img src={item.img_url} alt={item.title} />
+                                    <img src={item.img_url} alt={item.title}/>
                                 </Link>
                             </div>
                             <div className='app-synopsis'>

@@ -4,6 +4,8 @@ export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
+export const LOGOUT = 'LOGOUT';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export const register = (userData) => async dispatch => {
     try {
@@ -14,11 +16,23 @@ export const register = (userData) => async dispatch => {
     }
 };
 
-export const login = (credentials) => async dispatch => {
+export const login = (credentials) => async (dispatch) => {
     try {
         const response = await axios.post('http://localhost:5000/api/login', credentials);
-        dispatch({ type: LOGIN_SUCCESS, payload: response.data });
+        const { accessToken } = response.data;
+
+        // Save the token to localStorage
+        localStorage.setItem('authToken', accessToken);
+        dispatch({ type: LOGIN_SUCCESS, payload: accessToken });
+        return Promise.resolve(response.data); // Возвращаем успешный результат
     } catch (error) {
-        dispatch({ type: LOGIN_FAIL, payload: error.response.data });
+        dispatch({ type: LOGIN_FAILURE, payload: error.message });
+        return Promise.reject(error); // Возвращаем ошибку
     }
+};
+
+
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('authToken');
+    dispatch({ type: LOGOUT });
 };

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { register } from '../redux/authActions';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {register} from '../redux/authActions';
+import {Link} from "react-router-dom";
 
 const Register = () => {
     const [userData, setUserData] = useState({
@@ -26,6 +27,11 @@ const Register = () => {
 
     return (
         <div>
+            <Link to="/">
+                <div className='back'>
+                    <button>Back</button>
+                </div>
+            </Link>
             <h2>Register</h2>
             {authState.error && <p>{authState.error}</p>}
             <form onSubmit={handleSubmit}>

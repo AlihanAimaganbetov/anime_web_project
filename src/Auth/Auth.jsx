@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../redux/authActions';
+import { login, LOGOUT } from '../redux/authActions';
 import { toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -11,7 +13,8 @@ const Login = () => {
 
     const dispatch = useDispatch();
     const authState = useSelector(state => state.auth);
-
+    const navigate = useNavigate();
+    console.log("login ",authState)
     const handleChange = (e) => {
         setCredentials({
             ...credentials,
@@ -22,17 +25,23 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await dispatch(login(credentials));
+            await dispatch(login(credentials)); // Дождитесь завершения login экшена
             toast.success('Successfully logged in!');
+            navigate('/'); // Redirect to home or another page
         } catch (error) {
-            toast.error('Failed to log in. Please check your credentials.');
+            toast.error(error.message || 'Failed to log in. Please check your credentials.');
         }
     };
 
     return (
         <div>
+            <Link to="/">
+                <div className='back'>
+                    <button>Back</button>
+                </div>
+            </Link>
             <h2>Login</h2>
-            {authState.error && <p>{authState.error}</p>}
+            {authState.error && <p>{authState.error.message || authState.error}</p>}
             <form onSubmit={handleSubmit}>
                 <input
                     type="email"
@@ -57,3 +66,7 @@ const Login = () => {
 };
 
 export default Login;
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('authToken');
+    dispatch({ type: LOGOUT });
+};

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,7 +17,24 @@ const pool = new Pool({
 app.use(express.json());
 app.use(cors());
 
-let users = [];
+const secretKey = 'your_jwt_secret';
+
+const authenticateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.sendStatus(401); // Добавлен return
+    }
+
+    jwt.verify(token, secretKey, (err, user) => {
+        if (err) {
+            return res.sendStatus(403); // Добавлен return
+        }
+        req.user = user;
+        next();
+    });
+};
+
 
 app.get('/api/users', async (req, res) => {
     try {
@@ -41,53 +59,46 @@ app.post('/api/register', async (req, res) => {
             client.release();
             return res.status(400).json({ message: 'User already exists' });
         }
-
-        // Вставка нового пользователя в базу данных
         const result = await client.query(
             'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
             [username, email, password]
         );
-
         const newUser = result.rows[0];
         client.release();
 
-        // Возвращаем данные нового пользователя
         res.status(201).json(newUser);
-    } catch (error) {
+    } catch (error){
         console.error(error);
         res.status(500).json({ message: 'Server Error' });
     }
 });
+
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
-
     try {
         const client = await pool.connect();
 
-        // Проверка, существует ли пользователь с указанным email
         const userCheck = await client.query('SELECT * FROM users WHERE email = $1', [email]);
         if (userCheck.rows.length === 0) {
             client.release();
             return res.status(400).json({ message: 'Invalid email or password' });
         }
-
         const user = userCheck.rows[0];
 
-        // Проверка пароля
         if (user.password !== password) {
             client.release();
             return res.status(400).json({ message: 'Invalid email or password' });
         }
 
+        const accessToken = jwt.sign({ id: user.id, email: user.email }, secretKey);
         client.release();
-
-        // Возвращаем данные пользователя (вы можете вернуть токен вместо этого)
-        res.status(200).json({ message: 'Login successful', user });
+        return res.json({ message: 'Login successful', user, accessToken });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Server Error' });
+        return res.status(500).json({ message: 'Server Error' });
     }
 });
+
 
 app.get('/api/Anime', async (req, res) => {
     try {

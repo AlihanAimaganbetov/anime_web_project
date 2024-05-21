@@ -1,10 +1,7 @@
-// store/index.js
-import {applyMiddleware, createStore} from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import {thunk} from 'redux-thunk'; // Импортируем middleware thunk из redux-thunk
 import reducers from './reducers';
-import { thunk } from 'redux-thunk';
 
-const store = createStore(reducers,
-    applyMiddleware(thunk)
-);
+const store = createStore(reducers, applyMiddleware(thunk)); // Применяем middleware thunk
 
 export default store;

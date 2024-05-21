@@ -22,6 +22,11 @@ const favoritesReducer = (state = initialState, action) => {
         ...state,
         favorites: state.favorites.filter(item => item.uid !== action.payload.uid),
       };
+    case 'FETCH_FAVORITES_SUCCESS':
+      return {
+        ...state,
+        favorites: action.payload,
+      };
     default:
       return state;
   }

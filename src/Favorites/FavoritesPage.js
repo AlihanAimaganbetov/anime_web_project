@@ -18,7 +18,7 @@ function FavoritesPage() {
         <div className='app-container'>
             <Link to="/">
                 <div className='back'>
-                <button>Back</button>
+                    <button>Back</button>
                 </div>
             </Link>
             <h1>Favorites</h1>
