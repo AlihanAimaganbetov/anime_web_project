@@ -1,17 +1,19 @@
-// FavoritesPage.js
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFromFavorites } from '../redux/reducers';
+import { fetchFavorites, removeFromFavorites } from '../redux/action';
 import { Link } from 'react-router-dom';
-import './FavoritesPage.css'
+import './FavoritesPage.css';
 
 function FavoritesPage() {
     const favorites = useSelector(state => state.favorites.favorites);
     const dispatch = useDispatch();
-    console.log(favorites);
+
+    useEffect(() => {
+        dispatch(fetchFavorites());
+    }, [dispatch]);
+
     const handleRemoveFromFavorites = (item) => {
-        dispatch(removeFromFavorites(item));
+        dispatch(removeFromFavorites(item.uid));
     };
 
     return (
@@ -45,7 +47,7 @@ function FavoritesPage() {
                                     </div>
                                 </div>
                                 <div className='addToFavorites'>
-                                    <button onClick={() => handleRemoveFromFavorites(item)}>Add to Favorite</button>
+                                    <button onClick={() => handleRemoveFromFavorites(item)}>Remove from Favorite</button>
                                 </div>
                             </div>
                         </li>

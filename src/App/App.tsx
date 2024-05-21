@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {useDispatch, useSelector} from 'react-redux';
 import {addToFavorites} from '../redux/action';
 import {Link} from 'react-router-dom';
 import './App.css'
-import { logout } from '../redux/authActions';
+import {logout} from '../redux/authActions';
 
 interface Anime {
     title: string;
@@ -27,9 +27,8 @@ const App: React.FC<{}> = () => {
     const dispatch = useDispatch();
     // @ts-ignore
     const authState = useSelector(state => state.auth);
-    const userData = localStorage.getItem('userData')
-    console.log(userData)
-
+    // @ts-ignore
+    const userData = JSON.parse(localStorage.getItem('userData'))
     const handleLogout = () => {
         // @ts-ignore
         dispatch(logout());
@@ -59,9 +58,8 @@ const App: React.FC<{}> = () => {
         // Получаем последний компонент, содержащий год
         const yearString = dateComponents[dateComponents.length - 1];
         // Преобразуем строку с годом в числовое значение
-        const year = parseInt(yearString);
         // Возвращаем год
-        return year;
+        return parseInt(yearString);
     };
 
     const sortByAired = () => {
@@ -81,6 +79,7 @@ const App: React.FC<{}> = () => {
         setCurrentPage(1);
     }, [searchQuery, items]);
     const addToFavoritesHandler = (item: Anime) => {
+        // @ts-ignore
         dispatch(addToFavorites(item));
         alert("Add")
     };
@@ -136,22 +135,31 @@ const App: React.FC<{}> = () => {
         <div>
             {authState.user ? (
                 <div>
+                    <h2>Welcome! {userData.user.username}<br></br>
+                        You are logged in.</h2>
+                    <div className='back'>
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>
 
-                    <h2>Welcome! You are logged in.</h2>
-                    <button onClick={handleLogout}>Logout</button>
                 </div>
             ) : (
                 <div>
                     <h2>You are not logged in.</h2>
+                    <Link to="login">
+                        <div className='back'>
+                            <button>login</button>
+                        </div>
+
+                    </Link>
+                    <Link to="register">
+                        <div className='back'>
+                            <button>register</button>
+                        </div>
+                    </Link>
                 </div>
             )}
         </div>
-        <Link to="login">
-            <button>login</button>
-        </Link>
-        <Link to="register">
-            <button>register</button>
-        </Link>
+
         <header className="app-header">
             <Link to="favorites">
                 <button>Favorites</button>
