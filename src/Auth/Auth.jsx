@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/authActions';
+import { toast } from 'react-toastify';
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -18,9 +19,14 @@ const Login = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(login(credentials));
+        try {
+            await dispatch(login(credentials));
+            toast.success('Successfully logged in!');
+        } catch (error) {
+            toast.error('Failed to log in. Please check your credentials.');
+        }
     };
 
     return (

@@ -7,7 +7,7 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 export const register = (userData) => async dispatch => {
     try {
-        const response = await axios.post('/api/register', userData);
+        const response = await axios.post('http://localhost:5000/api/register', userData);
         dispatch({ type: REGISTER_SUCCESS, payload: response.data });
     } catch (error) {
         dispatch({ type: REGISTER_FAIL, payload: error.response.data });
@@ -16,7 +16,7 @@ export const register = (userData) => async dispatch => {
 
 export const login = (credentials) => async dispatch => {
     try {
-        const response = await axios.post('/api/login', credentials);
+        const response = await axios.post('http://localhost:5000/api/login', credentials);
         dispatch({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (error) {
         dispatch({ type: LOGIN_FAIL, payload: error.response.data });
