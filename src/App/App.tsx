@@ -27,6 +27,9 @@ const App: React.FC<{}> = () => {
     const dispatch = useDispatch();
     // @ts-ignore
     const authState = useSelector(state => state.auth);
+    const userData = localStorage.getItem('userData')
+    console.log(userData)
+
     const handleLogout = () => {
         // @ts-ignore
         dispatch(logout());
@@ -133,6 +136,7 @@ const App: React.FC<{}> = () => {
         <div>
             {authState.user ? (
                 <div>
+
                     <h2>Welcome! You are logged in.</h2>
                     <button onClick={handleLogout}>Logout</button>
                 </div>

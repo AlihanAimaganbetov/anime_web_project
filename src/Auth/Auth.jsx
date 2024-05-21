@@ -14,7 +14,6 @@ const Login = () => {
     const dispatch = useDispatch();
     const authState = useSelector(state => state.auth);
     const navigate = useNavigate();
-    console.log("login ",authState)
     const handleChange = (e) => {
         setCredentials({
             ...credentials,

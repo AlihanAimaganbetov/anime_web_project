@@ -23,6 +23,7 @@ export const login = (credentials) => async (dispatch) => {
 
         // Save the token to localStorage
         localStorage.setItem('authToken', accessToken);
+        localStorage.setItem('userData', JSON.stringify(response.data));
         dispatch({ type: LOGIN_SUCCESS, payload: accessToken });
         return Promise.resolve(response.data); // Возвращаем успешный результат
     } catch (error) {
@@ -34,5 +35,6 @@ export const login = (credentials) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userdata')
     dispatch({ type: LOGOUT });
 };
