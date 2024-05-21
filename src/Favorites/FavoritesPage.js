@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 import './FavoritesPage.css'
 
 function FavoritesPage() {
-    const favorites = useSelector(state => state.favorites);
+    const favorites = useSelector(state => state.favorites.favorites);
     const dispatch = useDispatch();
-
+    console.log(favorites);
     const handleRemoveFromFavorites = (item) => {
         dispatch(removeFromFavorites(item));
     };
@@ -31,16 +31,21 @@ function FavoritesPage() {
                             <div className='anime'>
                                 <p>{item.title}</p>
                                 <div className='img-synopsis'>
-
                                     <div className='app-img'>
-                                        <img src={item.img_url} alt={item.title} />
+                                        <Link to={`/anime/${item.uid}`}>
+                                            <img src={item.img_url} alt={item.title}/>
+                                        </Link>
                                     </div>
-                                    <div className='app-synopsis'>{item.synopsis}</div>
-
-
+                                    <div className='app-synopsis'>
+                                        <p><b>Description: </b> {item.synopsis}</p>
+                                        <p><b>Score: </b> {item.score}</p>
+                                        <p><b>Episodes: </b> {item.episodes}</p>
+                                        <p><b>Genre: </b>{item.genre}</p>
+                                        <p><b>Aired: </b>{item.aired}</p>
+                                    </div>
                                 </div>
                                 <div className='addToFavorites'>
-                                <button onClick={() => handleRemoveFromFavorites(item)}>Remove from Favorites</button>
+                                    <button onClick={() => handleRemoveFromFavorites(item)}>Add to Favorite</button>
                                 </div>
                             </div>
                         </li>
